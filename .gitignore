@@ -1,0 +1,14 @@
+.idea
+*.iml
+node_modules
+target
+package-lock.json
+cljs-runtime
+manifest.json
+manifest.edn
+.nrepl-port
+.shadow-cljs
+public/css/*.css
+public/js/*.js
+dist/*
+public/js/manifest.edn
