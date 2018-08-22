@@ -1,53 +1,26 @@
 (ns nastok.core
   (:require
-   [nastok.db.handlers]
-   [nastok.db.subs]
    [reagent.core :as r]
-   [reagent.session :as session]
    [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+   [oops.core :refer [ocall oget oset!]]
+
    [nastok.fb.init :refer [firebase-init]]
-   ["@material-ui/core/Fade" :default Fade]
-   ["@material-ui/core/styles" :refer [MuiThemeProvider createMuiTheme]]
-   ;["@material-ui/core/List" :default List]
-   ["@material-ui/core/colors/cyan" :default cyanColor]
-
    [nastok.pages.routs :as pages.routs]
-   [nastok.components.top :as top]
-   [oops.core :refer [ocall oget oset!]]))
 
+   ["@material-ui/core/styles" :refer [MuiThemeProvider createMuiTheme]]
+   ["@material-ui/core/colors/cyan" :default cyanColor]))
 
-#_(shadow.cljs.devtools.api/nrepl-select :app)
-
-
-(def theme (createMuiTheme (clj->js {:palette {:primary
-                                                        {:light (oget cyanColor "400")
+(def theme (createMuiTheme (clj->js {:palette {:primary {:light (oget cyanColor "400")
                                                          :main (oget cyanColor "600")
                                                          :dark (oget cyanColor "900")
                                                          :contrastText "#fff"}}})))
-
-
-
-
-
-
-
-(defn main-component []
-  (let []
-    (fn []
-      [:> Fade {:in true}
-       [:div
-        [top/bar]
-        [pages.routs/current-page]]])))
-
 (defn app []
   (let [user (subscribe [:user])]
     (fn []
       [:> MuiThemeProvider
        {:theme theme}
        (if @user
-         [main-component])])))
-
-
+         [pages.routs/main-component])])))
 
 (defn render []
   (r/render [app]

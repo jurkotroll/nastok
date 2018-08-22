@@ -5,6 +5,7 @@
      [nastok.pages.frontpage :as pages.frontpage]
      [nastok.pages.travels :as pages.travels]
      [nastok.pages.travel :as pages.travel]
+     [nastok.components.top :as components.top]
      [reitit.coercion :as rc]
      [reitit.coercion.schema :as rsc]
      [schema.core :as s]
@@ -38,22 +39,25 @@
      (if (:foo query)
        [:p "Optional foo query param: " (:foo query)])]))
 
+(defn main-component []
+  (let []
+    (fn []
+      [:div
+       [components.top/bar]
+       [:ul {:style {:margin-top "100px"}}
+        [:li [:a {:href (rfe/href ::frontpage)} "Frontpage"]]
+        [:li [:a {:href (rfe/href :travels/listpage)} "List of travels"]]
+        [:li [:a {:href (rfe/href :travels/travel {:id "travel001"})} "Travel001"]]
+        [:li [:a {:href (rfe/href ::about)} "About"]]
+        [:li [:a {:href (rfe/href ::my-profile)} "My Profile"]]
+        [:li [:a {:href (rfe/href ::item {:id 1})} "Item 1"]]
+        [:li [:a {:href (rfe/href ::item {:id 2} {:foo "bar"})} "Item 2"]]]
+       (if @match
+         (let [view (:view (:data @match))]
+           [view @match]))
+       [:pre (with-out-str (fedn/pprint @match))]])))
 
 
-(defn current-page []
-  [:div {:style {:margin-top "100px"}}
-   [:ul
-    [:li [:a {:href (rfe/href ::frontpage)} "Frontpage"]]
-    [:li [:a {:href (rfe/href :travels/listpage)} "List of travels"]]
-    [:li [:a {:href (rfe/href :travels/travel {:id "travel001"})} "Travel001"]]
-    [:li [:a {:href (rfe/href ::about)} "About"]]
-    [:li [:a {:href (rfe/href ::my-profile)} "My Profile"]]
-    [:li [:a {:href (rfe/href ::item {:id 1})} "Item 1"]]
-    [:li [:a {:href (rfe/href ::item {:id 2} {:foo "bar"})} "Item 2"]]]
-   (if @match
-     (let [view (:view (:data @match))]
-       [view @match]))
-   [:pre (with-out-str (fedn/pprint @match))]])
 
 (def routes
   (re/router
