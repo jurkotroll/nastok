@@ -19,3 +19,8 @@
  (fn
    [db _]
    (:travels db)))
+
+(rf/reg-sub
+ :travel
+ (fn [db [_ id]]
+  (get-in db [:travels id] (str "no travel with id" id))))

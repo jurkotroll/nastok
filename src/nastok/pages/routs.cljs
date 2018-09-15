@@ -6,6 +6,8 @@
      [nastok.pages.travels :as pages.travels]
      [nastok.pages.travel :as pages.travel]
      [nastok.components.top :as components.top]
+     [nastok.components.views :as components.views]
+     [nastok.components.manemenu :as components.manemenu]
      [reitit.coercion :as rc]
      [reitit.coercion.schema :as rsc]
      [schema.core :as s]
@@ -39,22 +41,24 @@
      (if (:foo query)
        [:p "Optional foo query param: " (:foo query)])]))
 
+
+
+
+(defn pageview
+ [match1]
+ (if match1
+   (let [view (:view (:data match1))]
+
+    [view match1])))
+
+
 (defn main-component []
   (let []
     (fn []
       [:div
        [components.top/bar]
-       [:ul {:style {:margin-top "100px"}}
-        [:li [:a {:href (rfe/href ::frontpage)} "Frontpage"]]
-        [:li [:a {:href (rfe/href :travels/listpage)} "List of travels"]]
-        [:li [:a {:href (rfe/href :travels/travel {:id "travel001"})} "Travel001"]]
-        [:li [:a {:href (rfe/href ::about)} "About"]]
-        [:li [:a {:href (rfe/href ::my-profile)} "My Profile"]]
-        [:li [:a {:href (rfe/href ::item {:id 1})} "Item 1"]]
-        [:li [:a {:href (rfe/href ::item {:id 2} {:foo "bar"})} "Item 2"]]]
-       (if @match
-         (let [view (:view (:data @match))]
-           [view @match]))
+       [components.manemenu/menu]
+       [pageview @match]
        [:pre (with-out-str (fedn/pprint @match))]])))
 
 
@@ -62,9 +66,7 @@
 (def routes
   (re/router
     ["/"
-     [""
-      {:name ::frontpage
-       :view pages.frontpage/frontpage}]
+
      ["travels"
       {:name :travels/listpage
        :view pages.travels/travels-page}]
@@ -73,17 +75,15 @@
        :view pages.travel/travelid
        :parameters {:path {:id s/Str}
                     :query {(s/optional-key :foo) s/Keyword}}}]
+     [""
+      {:name :website/frontpage
+       :view pages.frontpage/frontpage}]
      ["about"
-      {:name ::about
+      {:name :website/about
        :view about-page}]
      ["profile"
-      {:name ::my-profile
-       :view my-profile}]
-     ["item/:id"
-      {:name ::item
-       :view item-page
-       :parameters {:path {:id s/Int}
-                    :query {(s/optional-key :foo) s/Keyword}}}]]
+      {:name :users/my-profile
+       :view my-profile}]]
     {:compile rc/compile-request-coercers
      :data {:coercion rsc/coercion}}))
 

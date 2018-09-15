@@ -9,13 +9,25 @@
   {:window-width (oget js/window "innerWidth")
    :user {}
    :travels {"travel001" #:travel{:id "travel001"
-                                  :place "Jańskie"}
+                                  :place "Jańskie Łaźnie"
+                                  :date "28-01-2018"
+                                  :start-city "Wrocław"
+                                  :start-time "6:00"}
              "travel002" #:travel{:id "travel002"
-                                  :place "Czarna Góra"}
+                                  :place "Czarna Góra"
+                                  :date "28-01-2018"
+                                  :start-city "Wrocław"
+                                  :start-time "6:00"}
              "travel003" #:travel{:id "travel003"
-                                  :place "Pec"}
+                                  :place "Pec"
+                                  :date "28-01-2018"
+                                  :start-city "Wrocław"
+                                  :start-time "6:00"}
              "travel004" #:travel{:id "travel004"
-                                  :place "Roketnice"}}})
+                                  :place "Roketnice"
+                                  :date "28-01-2018"
+                                  :start-city "Wrocław"
+                                  :start-time "6:00"}}})
 
 
 (rf/reg-event-db
