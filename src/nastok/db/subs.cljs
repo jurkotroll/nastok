@@ -22,5 +22,16 @@
 
 (rf/reg-sub
  :travel
- (fn [db [_ id]]
-  (get-in db [:travels id] (str "no travel with id" id))))
+ (fn [db _]
+  (let [id @(rf/subscribe [:travel-id])]
+   (get-in db [:travels id] (str "no travel with id" id)))))
+
+(rf/reg-sub
+  :get-match
+  (fn [db _]
+    (:match db)))
+
+(rf/reg-sub
+  :travel-id
+  (fn [db _]
+    (get-in db [:match :path-params :id])))

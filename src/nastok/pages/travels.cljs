@@ -20,7 +20,8 @@
 
 (defn travel-to-list [id place]
   (let [open-travel #(rfe/push-state :travels/travel {:id id})]
-    [:> ListItem {:key id :button true :on-click open-travel}
+    
+     [:> ListItem {:button true :on-click open-travel} ;;:key id
 
       [:> Avatar (first place)]
       [:> ListItemText {:primary place}]
@@ -34,21 +35,17 @@
 
 (defn list-of-travels [travels]
   (let [values (vals @travels)]
-
-    [:div
-      (for [{:keys [travel/id travel/place]} values]
-       [:div
-         [travel-to-list id place]])]))
+    [:> List {:subheader "Travels"}
+      (for
+        [{:keys [travel/id travel/place]} values]
+        ^{:key id} [travel-to-list id place])]))
 
 
 
 
 (defn travels-page []
   (let [travels (subscribe [:travels])]
-   (fn []
-
-    [:div
-     [:h1 "Travels"]
-     [:div
-       [list-of-travels travels]
-       [:pre (with-out-str (fedn/pprint (keys @travels)))]]])))
+    (fn []
+      [:div.view
+        [:h1 "Travels"]
+        [list-of-travels travels]])))

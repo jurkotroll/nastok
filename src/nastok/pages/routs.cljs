@@ -17,7 +17,7 @@
      [fipp.edn :as fedn]))
 
 
-(defonce match (r/atom nil))
+;(defonce match (r/atom nil))
 
 (defn my-profile []
   (let [user (subscribe [:user])]
@@ -53,7 +53,7 @@
 
 
 (defn main-component []
-  (let []
+  (let [match (subscribe [:get-match])]
     (fn []
       [:div
        [components.top/bar]
@@ -73,8 +73,8 @@
      ["travel/:id"
       {:name :travels/travel
        :view pages.travel/travelid
-       :parameters {:path {:id s/Str}
-                    :query {(s/optional-key :foo) s/Keyword}}}]
+       :parameters {:path {:id s/Str}}}]
+                    ;:query {(s/optional-key :foo) s/Keyword}}}]
      [""
       {:name :website/frontpage
        :view pages.frontpage/frontpage}]
@@ -89,6 +89,7 @@
 
 (defn init-routs []
   (rfe/start! routes
-              (fn [m] (reset! match m))
+              ;(fn [m] (reset! match m))
+              (fn [m] (dispatch [:update-match m]))
               {:use-fragment true
                :path-prefix "/"}))

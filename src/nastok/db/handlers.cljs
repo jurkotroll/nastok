@@ -8,6 +8,7 @@
 (def empty-db
   {:window-width (oget js/window "innerWidth")
    :user {}
+   :match nil
    :travels {"travel001" #:travel{:id "travel001"
                                   :place "Jańskie Łaźnie"
                                   :date "28-01-2018"
@@ -28,6 +29,12 @@
                                   :date "28-01-2018"
                                   :start-city "Wrocław"
                                   :start-time "6:00"}}})
+
+(rf/reg-event-db
+ :update-match
+ (fn
+   [db [_ match]]
+   (assoc db :match match)))
 
 
 (rf/reg-event-db

@@ -10,7 +10,7 @@
     [fipp.edn :as fedn]
     [reagent.core :as r]))
 
-(defn travelid1 [match]
+(defn travelid01 [match]
  (fn []
    (let [id-from-match #(:id (:path (:parameters match)))
          {:keys [id]} (:path (:parameters match))
@@ -22,7 +22,7 @@
      ;[:h1 (str "path " path)]
      [:h1 (str "id: " id)]])))
 
-(defn travelid2 [match]
+(defn travelid02 [match]
  (let [;id-from-match #(:id (:path (:parameters @match)))
        {:keys [id]} (:path (:parameters match))]
        ;travel (subscribe [:travel (id-from-match)])]
@@ -35,7 +35,7 @@
      ;[:h1 (str "path " path)]
      [:h1 (str "id: " id)]])))
 
-(defn travelid3 [match]
+(defn travelid03 [match]
  (let [;id-from-match #(:id (:path (:parameters match)))
        {:keys [id]} (:path (:parameters match))]
        ;travel (subscribe [:travel (id-from-match)])]
@@ -50,7 +50,7 @@
 
 (enable-console-print!)
 
-(defn travelid
+(defn travelid04
   [match]
   (let [mid (:id (:path (:parameters match)))
         travel (subscribe [:travel mid])
@@ -82,3 +82,28 @@
          [:pre (with-out-str (fedn/pprint @upinmaptr))]
          ;[:h1 (str "path " path)]
          [:h1 (str "id: " (:travel/id @upinmaptr))]])})))
+
+(defn travelid05  
+  [match]
+  (let [mid @(subscribe [:travel-id])
+        travel (r/atom @(subscribe [:travel]))]
+    (r/create-class
+      {:component-did-mount
+       (fn [] (println (str mid " did mount")))
+
+       :display-name "travelid"
+
+       :component-will-update
+       (fn [this [_ props]]
+         (println (str "will update"))
+         (reset! travel @(subscribe [:travel (:id (:path (:parameters props)))])))
+
+       :reagent-render
+       (fn [match] ;; <-- tu =====
+        [:div
+         [:h1 (str "mid: " mid " travel/id " (:travel/id @travel))]])})))
+
+(defn travelid []
+  (let [travel (subscribe [:travel])]
+   [:div
+    [:h1 (str "id " (:travel/id @travel))]]))
