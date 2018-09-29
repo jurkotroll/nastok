@@ -1,5 +1,6 @@
 (ns nastok.core
   (:require
+   [clojure.browser.repl :as repl]
    [nastok.db.handlers]
    [nastok.db.subs]
    [reagent.core :as r]
@@ -13,10 +14,18 @@
    ["@material-ui/core/styles" :refer [MuiThemeProvider createMuiTheme]]
    ["@material-ui/core/colors/cyan" :default cyanColor]))
 
+;;(repl/connect "http://localhost:9000/repl")
+
+(enable-console-print!)
+
 (def theme (createMuiTheme (clj->js {:palette {:primary {:light (oget cyanColor "400")
                                                          :main (oget cyanColor "600")
                                                          :dark (oget cyanColor "900")
                                                          :contrastText "#fff"}}})))
+(set! (-> theme .-typography .-fontSize) 28)
+
+(js/console.log (-> theme))
+
 (defn app []
   (let [user (subscribe [:user])]
     (fn []

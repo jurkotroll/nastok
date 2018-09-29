@@ -1,6 +1,8 @@
 (ns nastok.db.subs
   (:require [re-frame.core :as rf]
-            [oops.core :refer [ocall oget]]))
+            [oops.core :refer [ocall oget]]
+            [cljs-time.core :as time]
+            [cljs-time.format :as timef]))
 
 (rf/reg-sub
  :user
@@ -35,3 +37,10 @@
   :travel-id
   (fn [db _]
     (get-in db [:match :path-params :id])))
+
+(rf/reg-sub
+  :day-of-week
+  (fn [db _]
+    (let [travel @(rf/subscribe [:travel])
+          date (:travel/date travel)]
+       date)))   

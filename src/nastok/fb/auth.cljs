@@ -3,7 +3,7 @@
             [oops.core :refer [ocall oget]]
             [re-frame.core :refer [dispatch]]))
 
-(defn sign-in-with-google
+(defn sign-in-with-facebook
   []
   (let [provider (firebase/auth.FacebookAuthProvider.)]
     (ocall (firebase/auth) "signInWithPopup" provider)))

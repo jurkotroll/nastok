@@ -12,6 +12,7 @@
     #_["@material-ui/core/Link" :default Link]
     ["@material-ui/core/ButtonBase" :default ButtonBase]
     ["@material-ui/core/Button" :default Button]
+
     [fipp.edn :as fedn]))
 
 (enable-console-print!)
@@ -20,8 +21,8 @@
 
 (defn travel-to-list [id place]
   (let [open-travel #(rfe/push-state :travels/travel {:id id})]
-    
-     [:> ListItem {:button true :on-click open-travel} ;;:key id
+
+     [:> ListItem {:button true :divider true :on-click open-travel} ;;:key id
 
       [:> Avatar (first place)]
       [:> ListItemText {:primary place}]

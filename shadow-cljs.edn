@@ -9,7 +9,10 @@
                 [cider/cider-nrepl "0.16.0"]
                 [metosin/reitit "0.2.0-SNAPSHOT"]
                 [fipp "0.6.12"]
-                [prismatic/schema "1.1.9"]]
+                [prismatic/schema "1.1.9"]
+                [proto-repl "0.3.1"]
+                [com.andrewmcveigh/cljs-time "0.5.2"]]
+
 
 
  ;; set an nrepl port for connection to a REPL.
