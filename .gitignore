@@ -12,3 +12,4 @@ public/css/*.css
 public/js/*.js
 dist/*
 public/js/manifest.edn
+to-do.txt

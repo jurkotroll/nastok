@@ -33,27 +33,17 @@
     [:li [:a {:href (rfe/href ::foobar)} "Missing route"]]
     [:li [:a {:href (rfe/href ::item)} "Missing route params"]]]])
 
-(defn item-page [match]
-  (let [{:keys [path query]} (:parameters match)
-        {:keys [id]} path]
-    [:div
-     [:h2 "Selected item " id]
-     (if (:foo query)
-       [:p "Optional foo query param: " (:foo query)])]))
-
-
-
-
 (defn pageview
- [match1]
- (if match1
-   (let [view (:view (:data match1))]
+ [match]
+ (if match
+   (let [view (get-in match [:data :view])]
 
-    [view match1])))
+    [view])))
 
 
 (defn main-component []
   (let [match (subscribe [:get-match])]
+
     (fn []
       [:div
        [components.top/bar]

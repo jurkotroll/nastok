@@ -53,7 +53,4 @@
     [:> Paper
      [:> Card
        [:> CardContent
-         [info-block-main]]]
-     [:> Card
-       [:> CardContent
          [info-block-main]]]]))

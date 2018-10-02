@@ -34,6 +34,13 @@
     (:match db)))
 
 (rf/reg-sub
+  :get-view-from-match
+  (fn [db _]
+    (get-in db [:match :data :view])))
+
+
+
+(rf/reg-sub
   :travel-id
   (fn [db _]
     (get-in db [:match :path-params :id])))
@@ -43,4 +50,4 @@
   (fn [db _]
     (let [travel @(rf/subscribe [:travel])
           date (:travel/date travel)]
-       date)))   
+       date)))

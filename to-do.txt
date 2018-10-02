@@ -2,6 +2,16 @@ Notes:
 (shadow.cljs.devtools.api/nrepl-select :app)
 ["@material-ui/core/Fade" :default Fade]
 
+APP
+1. Login page to choose login method.
+2. frontpage with link to travel listpage
+3. link to userpage in login menu
+4. simple UI for listpage
+5. simple UI for travelpage
+6. simple UI for userpage
+7. manemenu on sidebar / on button click
 
-1. Login menu to choose login method.
-2.
+LEARN
+1. Reagent kurs
+2. REPL dom manipulation
+3. firebase upload
