@@ -1,4 +1,4 @@
-(ns nastok.pages.travels
+(ns nastok.components.listspage
   (:require
     [re-frame.core :refer [subscribe dispatch]]
     ["@material-ui/core/List" :default List]
@@ -34,19 +34,10 @@
 
 
 
-(defn list-of-travels [travels]
-  (let [values (vals @travels)]
+(defn list-of-travels []
+  (let [travels (subscribe [:travels])
+        values (vals @travels)]
     [:> List {:subheader "Travels"}
       (for
         [{:keys [travel/id travel/place]} values]
         ^{:key id} [travel-to-list id place])]))
-
-
-
-
-(defn travels-page []
-  (let [travels (subscribe [:travels])]
-    (fn []
-      [:div.view
-        [:h1 "Travels"]
-        [list-of-travels travels]])))

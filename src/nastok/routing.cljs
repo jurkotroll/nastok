@@ -1,13 +1,11 @@
-(ns nastok.pages.routs
+(ns nastok.routing
   (:require
      [reitit.frontend.easy :as rfe]
      [reitit.core :as re]
-     [nastok.pages.frontpage :as pages.frontpage]
-     [nastok.pages.travels :as pages.travels]
-     [nastok.pages.travel :as pages.travel]
      [nastok.components.top :as components.top]
      [nastok.components.views :as components.views]
      [nastok.components.manemenu :as components.manemenu]
+     [nastok.theme :refer [theme]]
      [reitit.coercion :as rc]
      [reitit.coercion.schema :as rsc]
      [schema.core :as s]
@@ -37,19 +35,22 @@
  [match]
  (if match
    (let [view (get-in match [:data :view])]
-
+    ;[:div "test"]
     [view])))
 
 
 (defn main-component []
   (let [match (subscribe [:get-match])]
+        ;theme (subscribe [:get-theme])]
 
     (fn []
       [:div
+       ;[:div "test"]
        [components.top/bar]
        [components.manemenu/menu]
        [pageview @match]
-       [:pre (with-out-str (fedn/pprint @match))]])))
+       [:pre (with-out-str (fedn/pprint @match))]
+       [:pre (with-out-str (fedn/pprint theme))]])))
 
 
 
@@ -59,15 +60,15 @@
 
      ["travels"
       {:name :travels/listpage
-       :view pages.travels/travels-page}]
+       :view components.views/travels-page}]
      ["travel/:id"
       {:name :travels/travel
-       :view pages.travel/travelid
+       :view components.views/travelid
        :parameters {:path {:id s/Str}}}]
                     ;:query {(s/optional-key :foo) s/Keyword}}}]
      [""
       {:name :website/frontpage
-       :view pages.frontpage/frontpage}]
+       :view components.views/frontpage}]
      ["about"
       {:name :website/about
        :view about-page}]
@@ -77,7 +78,7 @@
     {:compile rc/compile-request-coercers
      :data {:coercion rsc/coercion}}))
 
-(defn init-routs []
+(defn init-routes []
   (rfe/start! routes
               ;(fn [m] (reset! match m))
               (fn [m] (dispatch [:update-match m]))

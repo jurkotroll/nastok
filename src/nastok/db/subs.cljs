@@ -38,7 +38,10 @@
   (fn [db _]
     (get-in db [:match :data :view])))
 
-
+; (rf/reg-sub
+;   :get-theme
+;   (fn [db _]
+;     (:theme db)))
 
 (rf/reg-sub
   :travel-id

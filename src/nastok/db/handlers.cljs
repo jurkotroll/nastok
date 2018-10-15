@@ -36,6 +36,11 @@
    [db [_ match]]
    (assoc db :match match)))
 
+; (rf/reg-event-db
+;  :update-theme
+;  (fn
+;    [db [_ theme]]
+;    (assoc db :theme theme)))
 
 (rf/reg-event-db
  :update-user

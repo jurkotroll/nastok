@@ -22,8 +22,8 @@
   (let []
     (fn []
       [:div
-       [:> Tooltip {:title "Log-in" :placement "left"}
-        [:> IconButton {:color "inherit" :label "Log-in" :on-click #(sign-in-with-facebook)}
+       [:> Tooltip {:id "usericon-tooltip"  :title "Log-in" :placement "left"}
+        [:> IconButton {:component "div" :color "inherit" :label "Log-in" :on-click #(sign-in-with-facebook)}
          [:> AccountCircle]]]])))
 
 (defn logged-in-user-pane [user]
@@ -39,21 +39,22 @@
       (println "anchor-el " (str (when @menuopen! (.-id @anchor-el))))
       (println "menuopen! " @menuopen!)
       ;(println "menuopen2! " (menuopen2!))
-      [:div.right-pane
-       [:> IconButton {:id "avatar-button"
-                       :on-click handle-menu
-                       :aria-owns (if (some? @anchor-el) "menu-appbar" nil)
-                       :aria-haspopup "true"}
-        [:> Avatar {:src (:photo @user) :alt (:name @user)}]]
-       [:> Menu {:id "menu-appbar"
-                 :open (some? @anchor-el);@menuopen!
-                 :anchorEl @anchor-el
-                 :anchorOrigin {:vertical "top"
-                                :horizontal "right"}
-                 :transformOrigin {:vertical "top"
-                                   :horizontal "right"}
-                 :on-close handle-close}
-        [:> MenuItem {:on-click #(sign-out)} "Loggout"]]]))))
+      [:> Tooltip {:id "usericon-tooltip"  :title "User menu" :placement "left"}
+       [:div.right-pane
+        [:> IconButton {:id "avatar-button"
+                        :on-click handle-menu
+                        :aria-owns (if (some? @anchor-el) "menu-appbar" nil)
+                        :aria-haspopup "true"}
+         [:> Avatar {:src (:photo @user) :alt (:name @user)}]]
+        [:> Menu {:id "menu-appbar"
+                  :open (some? @anchor-el);@menuopen!
+                  :anchorEl @anchor-el
+                  :anchorOrigin {:vertical "top"
+                                 :horizontal "right"}
+                  :transformOrigin {:vertical "top"
+                                    :horizontal "right"}
+                  :on-close handle-close}
+         [:> MenuItem {:on-click #(sign-out)} "Loggout"]]]]))))
 
 
 (defn bar []
@@ -64,7 +65,7 @@
         [:> Toolbar {:style {:min-height 64} :color "primary"}
          [:> IconButton {:style {:margin-right 20 :margin-left -12}}
           [:> MenuIcon {:style {:color "white"}}]]
-         [:> Typography {:variant "headline" :color "inherit" :style {:flexGrow 1}}
+         [:> Typography {:variant "h5" :color "inherit" :style {:flexGrow 1}}
            "Razem na stok"]
          (if (empty? @user)
            [login]
